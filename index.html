@@ -8,6 +8,15 @@
 </head>
 
 <body>
+  <ul>
+    <li>list1</li>
+    <li>list2</li>
+    <li>list3</li>
+  </ul>
+
+
+
+
   <script>
     /*원시형자료(primate type) vs 참조형 자료(reference type)
     원시형자료는 메모리에 값자체가 담기는 자료 (문자열, 숫자, boolean. underfined)
@@ -125,12 +134,59 @@
     //전달되는 인수값은 객체하나인데 객체안의 property값을 추출해서 내부로 전달
 
     //총 3개의 인수가 전달
+    /*
     function showInfo({ name, age, hobby = '없음' }) {
       console.log(`해당학생의 이름은 ${name}이며 나이는 ${age}입니다. 그리고 취미는 ${hobby}입니다.`)
     }
     showInfo(studentInfo[0])
     showInfo(studentInfo[1])
     showInfo(studentInfo[2])
+*/
+
+    const lis = document.querySelectorAll("li");
+    console.log(lis);
+
+    //fotEach 순수배열이 아닌 유사배열도 반복사능
+    lis.forEach((data) => {
+      console.log(data);
+    })
+
+    //순수배열만 반복가능;
+    //querySelectorALL로 받아지는 배열값은 유사배열이기 때문에 map으로 반복처리 불가능
+    //해결방법 -유사배열을 순수배열로 변환
+    const newLis = Array.from(lis); //유사배열을 인수로 받아서 순수배열형태로 반환
+    newLis.map((data) => {
+      console.log(data);
+    })
+    //for of : 문자를 반복처리
+    const text = 'DEVELOPMENT';
+
+    for (let letter of text) {
+      console.log(letter);
+    }
+    //for in : 객체의 key를 반복처리
+    const student4 = {
+      name: 'David',
+      age: 20,
+      address: 'Seoul',
+      hobby: 'game'
+    }
+    //for in 반복문에서는 key값을 문자로 반복처리하기 떄문에
+    //객체명.key 호출 불가능
+    //객체명[key]호출
+    for (let key in student4) {
+      console.log(student4[key]);
+    }
+
+
+    //es7
+    //Object.keys(객체명):배열로 해당 객체의 key를 반환
+    //Object.values(객체명):배열로 해당 객체의 values값을 반환
+    console.log(Object.keys(student4))
+    console.log(Object.values(student4))
+
+    //Object.key로 반환된 배열값 바로 반복처리
+    Object.keys(student4).forEach(key => console.log(student4[key]))
   </script>
 
 </body>
