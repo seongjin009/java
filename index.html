@@ -187,6 +187,25 @@
 
     //Object.key로 반환된 배열값 바로 반복처리
     Object.keys(student4).forEach(key => console.log(student4[key]))
+
+    //filter : 기존 배열값의 불변성을 유지하면서 특정조건에 부합되는 새로운 배열을 반환
+    const studentDB = [
+      { name: 'seongjin', age: 20, 'hobby': 'game' },
+      { name: 'emily', age: 18, 'hobby': 'music' },
+      { name: 'eunjin', age: 29, 'hobby': 'game' },
+      { name: 'gwang', age: 54, }
+    ]
+
+    const result = studentDB.map((data) => {
+      return data.hobby;
+    });
+    console.log(result); //['game','music','game','undefined']
+
+    //filter의 인수로 조건식을 넣어서 
+    //해당 조건에 부합되는 값만 배열로 변환
+
+    const abc = result.filter(data => data === undefined);
+    console.log(abc);
   </script>
 
 </body>
