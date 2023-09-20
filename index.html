@@ -5,9 +5,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    article {
+      width: 300px;
+      height: 300px;
+      background-color: aqua;
+    }
+
+    /*
+    css 우선순위
+    1.id로 적용한 스타일이 class로 적용한 스타일보다 우선순위가 높음
+    2.선택자가 길고 구체적인게 우선순위가 높음
+    3.위의 규칙을 무시하고 강제로 우선순위를 높이고 싶을깨에는 속성구문 뒤에 important적용
+    4.자바스크립트로 스타일 덮어쓰기 가능
+    */
+  </style>
 </head>
 
 <body>
+
+  <!--
+    static DOM (HTML태그로 구성하는 돔)
+    dydnamic DOM (자바스크립트로 구성하는 돔)
+
+    <article>
+
+    <a href="#">link</a>
+
+    </article>
+
+    template literal
+    : 문자안에 변수를 편하게 삽입할 때
+    
+  -->
   <ul>
     <li>list1</li>
     <li>list2</li>
@@ -15,14 +45,68 @@
   </ul>
 
   <ul class="btns">
-    <li>button1</li>
+    <li class="on">button1</li>
     <li>button2</li>
     <li>button3</li>
   </ul>
 
 
+  <a href="https://www.naver.com" target="_blank" title="네이버 페이지로 이동">네이버</a>
+
+
 
   <script>
+    //`<a href='${link}>'링크</a>`
+
+    const url = 'https://www.naver.com';
+    const text2 = '네이버'
+
+    //부모프레임.innerHTML = '자식태그 문자열'
+    //innerHTML은 기존 프레임안쪽의 값을 없애버리므로 대입되는 문자열로 바꿔치기
+    document.body.innerHTML = `
+    <article>
+    <a href="${url}">${text2}</a>
+    </article>
+    `
+
+    /*
+    const box = document.querySelector('article');
+    box.addEventListener('click', () => {
+      //자바스크립트는 html외의 css파일에 대한 접근권한이 없으므로 css로 등록되어 있는 스타일 정보값을 가져오는게 불가능
+      //결론 = 일반 css에 적용되어 있는 스타일을 가져오기 위해서는 getComputedStyl메서드 사용
+      // box.style['background-color'] = 'hotpink';
+      // console.dir(box.style);
+      //contgetComputedStyle() : 이미 브라우저에 렌더링된 스타일 다시 script로 연산해서 연산된 결과값을 반환
+
+    })
+
+    const link = document.querySelector('a');
+
+    console.log(link.getAttribute('target'));
+
+    const attrInfo = [
+      { href: 'https://www.nate.com' },
+      { target: '_blank' },
+      { title: '네이트 페이지로 이동' },
+      { text: '네이트' }
+
+    ]
+
+    const changeAttr = (selector, info) => {
+      info.forEach((data) => {
+        const key = Object.keys(data)[0];
+        const value = Object.values(data)[0];
+        console.log('keys');
+        console.log('value');
+        selector.setAttribute(key, value);
+        if (key === 'text') selector.innerText = value;
+      })
+    }
+    changeAttr(link, attrInfo)
+*/
+
+
+
     /*원시형자료(primate type) vs 참조형 자료(reference type)
     원시형자료는 메모리에 값자체가 담기는 자료 (문자열, 숫자, boolean. underfined)
     원시형자료는 callstack에 메모리 선언후 값도 담김
@@ -251,20 +335,21 @@
 
 
 
-    const btns = document.querySelectorAll('.btns li');
 
-    const hander1 = () => {
-      console.log('test')
-    }
-    const hander2 = (text) => {
-      console.log(text)
-    }
 
-    //이벤트 발생 시 호출할 함수에 인수를 전달할 필요가 없을 때
-    btns[0].addEventListener('click', hander1)
-    //이벤트 발생 시 호출할 함수에 인수를 전달해야 될 때 다시 화살표함수로 wrapping처리
-    btns[1].addEventListener('click', () => hander2('hello'))
-
+    /*
+        const hander1 = () => {
+          console.log('test')
+        }
+        const hander2 = (text) => {
+          console.log(text)
+        }
+    
+        //이벤트 발생 시 호출할 함수에 인수를 전달할 필요가 없을 때
+        btns[0].addEventListener('click', hander1)
+        //이벤트 발생 시 호출할 함수에 인수를 전달해야 될 때 다시 화살표함수로 wrapping처리
+        btns[1].addEventListener('click', () => hander2('hello'))
+    */
 
     /*
         btns.forEach(btn => {
@@ -276,16 +361,16 @@
           })
         })
         */
-
-    btns.forEach(function (btn) {
-      //일반 function문으로 이벤트핸들러 연셜시 내부의 this객체는 이벤트가 발생한 대상을 지칭
-      //기본 function문으로 호출되는 위치에 따라 내부에 생성되는 this의 값이 변경됨
-      //this객체가 임의로 생성되는 function밖에 bind메서드로 원하는 값으로 고정가능
-      btn.addEventListener('click', function (e) {
-        console.log(this)
-      })
-    }.bind(this))
-
+    /*
+        btns.forEach(function (btn) {
+          //일반 function문으로 이벤트핸들러 연셜시 내부의 this객체는 이벤트가 발생한 대상을 지칭
+          //기본 function문으로 호출되는 위치에 따라 내부에 생성되는 this의 값이 변경됨
+          //this객체가 임의로 생성되는 function밖에 bind메서드로 원하는 값으로 고정가능
+          btn.addEventListener('click', function (e) {
+            console.log(this)
+          })
+        }.bind(this))
+    */
 
 
   </script>
